@@ -1,0 +1,133 @@
+.simulator {
+  background-color: var(--fun-zone-card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+  color: var(--fun-zone-text);
+  border: 1px solid var(--accent-color);
+}
+
+.coffeemaker {
+  background-color: var(--secondary-bg-color);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  border: 1px solid var(--coffee-brown);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control label {
+  color: var(--fun-zone-text);
+  font-weight: bold;
+}
+
+.control input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--secondary-bg-color);
+  outline: none;
+  border: 1px solid var(--accent-color);
+}
+
+.control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+}
+
+.control output {
+  color: var(--fun-zone-secondary-text);
+  align-self: flex-end;
+}
+
+.brewButton {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.brewButton:hover:not(:disabled) {
+  background-color: var(--fun-zone-card-hover);
+  color: var(--accent-color);
+}
+
+.brewButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.coffeeResult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.mug {
+  width: 120px;
+  height: 140px;
+  background-color: var(--secondary-bg-color);
+  border-radius: 0 0 70px 70px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 10px var(--coffee-light);
+}
+
+.mug::before {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: 30px;
+  width: 70px;
+  height: 50px;
+  border: 10px solid var(--coffee-light);
+  border-radius: 50%;
+}
+
+.coffee {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background-color: var(--coffee-brown);
+  transition: height 0.5s ease-out, opacity 0.5s;
+}
+
+.result {
+  font-weight: bold;
+  text-align: center;
+  color: var(--accent-color);
+}
+
+.explanation {
+  text-align: center;
+  color: var(--fun-zone-secondary-text);
+}
