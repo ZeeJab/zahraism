@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import styles from './page.module.css'
 import { motion } from 'framer-motion'
@@ -8,13 +8,34 @@ import DarkModeToggle from './components/DarkModeToggle'
 import CoffeeSimulator from './components/CoffeeSimulator'
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState('home')
   const gameCardsRef = useRef<(HTMLElement | null)[]>([])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'fun-zone']
+      const currentSection = sections.find(section => {
+        const element = document.getElementById(section)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          return rect.top <= 100 && rect.bottom > 100
+        }
+        return false
+      })
+      if (currentSection) {
+        setActiveTab(currentSection)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
         const currentFocus = document.activeElement
-        const currentIndex = gameCardsRef.current.findIndex(el => el === currentFocus)
+        const currentIndex = gameCardsRef.current.indexOf(currentFocus as HTMLElement)
         if (currentIndex !== -1) {
           let nextIndex
           if (event.key === 'ArrowRight') {
@@ -35,17 +56,16 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <header>
         <DarkModeToggle />
         <nav className={styles.nav} aria-label="Main navigation">
-          <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#fun-zone">Fun Zone</a></li>
-          </ul>
+          <a href="#home" className={activeTab === 'home' ? styles.active : ''} aria-current={activeTab === 'home' ? 'page' : undefined}>Home</a>
+          <a href="#fun-zone" className={activeTab === 'fun-zone' ? styles.active : ''} aria-current={activeTab === 'fun-zone' ? 'page' : undefined}>Fun Zone</a>
         </nav>
       </header>
       
-      <main>
+      <main id="main-content">
         <section id="home" className={styles.section}>
           <motion.div 
             className={styles.contentWrapper}
@@ -59,15 +79,15 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <h1 className={styles.name}>Zahra Jabini</h1>
-                <h2 className={styles.title}> 
-                  Director of Design Engineering <a href="https://www.vercel.com/design" target="_blank" rel="noopener noreferrer">Vercel</a>
-                </h2>
-                <h2 className={styles.title}>
+             <h1 className={styles.name}>Zahra Jabini</h1>
+                <p className={styles.title}> 
+                  Director of Design Engineering <a href="https://www.vercel.com/design" target="_blank" rel="noopener noreferrer">@Vercel</a>
+                </p>
+                <p className={styles.title}>
                   Organizer <a href="http://manhattanjs.com/" target="_blank" rel="noopener noreferrer">ManhattanJS</a> &  <a href="http://manhattanai.com/" target="_blank" rel="noopener noreferrer">ManhattanAI</a> 
-                </h2>
-                <h2 className={styles.smallText}>Part-time Architect Full-time Coffee Connoisseur</h2>
-              <p className={styles.location}>New York, NY 🗽</p>
+                </p>
+                <p className={styles.smallText}>Part-time Architect Full-time Coffee Connoisseur</p>
+                <p className={styles.location}>New York, NY 🗽</p>
             </motion.div>
             <motion.div 
               className={styles.imageWrapper}
@@ -93,7 +113,7 @@ export default function Home() {
           
           <div className={styles.gameGrid}>
             <article 
-              className={styles.gameCard} 
+              className={styles.gameCard}
               tabIndex={0}
               ref={el => { gameCardsRef.current[0] = el }}
             >
