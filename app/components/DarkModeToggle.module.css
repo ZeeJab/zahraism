@@ -1,10 +1,10 @@
 .toggleButton {
   position: fixed;
-  top: 20px;
+  top: 10px;
   right: 20px;
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1001;
 }
